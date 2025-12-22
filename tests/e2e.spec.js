@@ -90,8 +90,23 @@ test('Verify if SubCategory creation works correctly', async({page}) => {
   
   await page.locator('#customCheckMain').click({ force: true });
   await expect(page.locator('#customCheckMain')).toBeChecked();
+
   await page.keyboard.type(category);
-  await page.keyboard.press("Enter")
+  // wait for dropdown to open
+  await expect(
+    page.locator('div[role="combobox"]')
+  ).toHaveAttribute('aria-expanded', 'true');
+
+  // click the desired option by text
+  await page.getByRole('option', { name: category }).click();
+
+  // wait for dropdown to close (selection applied)
+  await expect(
+    page.locator('div[role="combobox"]')
+  ).toHaveAttribute('aria-expanded', 'false');
+  
+  await expect(page.locator('button[type="submit"]')).toBeEnabled();
+  
   await page.locator('button[type="submit"]').click();
 
   //Verify if category addition alert was displayed
