@@ -55,7 +55,7 @@ npx playwright test
 
 ##  Test Strategy and Implementation
 
-- **Data generation functions**
+- **Data generation functions**  
   In order to not use any repeated information I've created two funcitions. The first one being the generateRandomUser that concatenates a random string to the defined email and password informations. The second, generateRandomCategories, has the same basic behavior but the defined category is randomly chosen amongst the options that are set in an array.
 
 - **User creation using API**  
@@ -68,6 +68,9 @@ npx playwright test
   Using the category and sub category defined by generateRandomCategories, the test navigates through the side menu and fills the category field before confirming its creation. The funcionality is basically the same for both with the major difference being in the subcategory creation, where a dropdown is loaded and must be filled before the subcategory is allowed to be created.
   By the end of both tests two verifications are made, the first on the alert confirming creation and the second on the last page of the table where the category or subcategory is verified
 
+
+<small>Note: More informations can be found inside the code!</small>
+
 ---
 
 ## Improvements for future me (or you, feel free to use this as a study guide):
@@ -76,5 +79,3 @@ npx playwright test
 - **Improve both category and subcategory tests so they are reused and not repeated**
 - **Use the API response to Log in**
 - **Set locators (may be part of the first one)**
-
-## Author: Camilla Silvestre
