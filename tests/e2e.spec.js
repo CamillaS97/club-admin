@@ -43,24 +43,24 @@ test('Category creation and verification of its existence', async({page}) => {
   await page.goto('https://club-administration.qa.qubika.com/#/auth/login')
   await page.getByPlaceholder('Usuario o correo electrónico').fill(email)
   await page.getByPlaceholder('Contraseña').fill(password)
-  await expect(page.locator('button[type="submit"]')).toBeEnabled();
-  await page.locator('button[type="submit"]').click();
+  await expect(page.locator('button[type="submit"]')).toBeEnabled()
+  await page.locator('button[type="submit"]').click()
 
 
   //Type the category, wait for button to be enabled and click on it to add
-  await page.locator('a:has-text("Tipos de Categorias")').click();
-  await page.locator('button:has-text("Adicionar")').click();
+  await page.locator('a:has-text("Tipos de Categorias")').click()
+  await page.locator('button:has-text("Adicionar")').click()
   await page.getByPlaceholder('Nombre de categoría').fill(category)
-  await expect(page.locator('button[type="submit"]')).toBeEnabled();
-  await page.locator('button[type="submit"]').click();
+  await expect(page.locator('button[type="submit"]')).toBeEnabled()
+  await page.locator('button[type="submit"]').click()
 
   //Verify if category addition alert was displayed
-  await expect(page.getByRole('alertdialog', {name: ' Tipo de categoría adicionada satisfactoriamente '})).toBeVisible(); 
+  await expect(page.getByRole('alertdialog', {name: ' Tipo de categoría adicionada satisfactoriamente '})).toBeVisible()
   
   //Goes to last page and verifies if category is there
-  const items = page.locator('//app-table-generic//div[3]/nav/ul/li');
-  const count = await items.count();
-  await items.nth(count - 2).click();
+  const items = page.locator('//app-table-generic//div[3]/nav/ul/li')
+  const count = await items.count()
+  await items.nth(count - 2).click()
   await expect(page.locator("tbody")).toContainText(category)
 })
 
@@ -70,39 +70,39 @@ test('Sub category creation and verification of its existence', async({page}) =>
   await page.goto('https://club-administration.qa.qubika.com/#/auth/login')
   await page.getByPlaceholder('Usuario o correo electrónico').fill(email)
   await page.getByPlaceholder('Contraseña').fill(password)
-  await expect(page.locator('button[type="submit"]')).toBeEnabled();
-  await page.locator('button[type="submit"]').click();
+  await expect(page.locator('button[type="submit"]')).toBeEnabled()
+  await page.locator('button[type="submit"]').click()
 
 
   //Adding sub category, same field as the category
-  await page.locator('a:has-text("Tipos de Categorias")').click();
-  await page.locator('button:has-text("Adicionar")').click();
+  await page.locator('a:has-text("Tipos de Categorias")').click()
+  await page.locator('button:has-text("Adicionar")').click()
   await page.getByPlaceholder('Nombre de categoría').fill(subCategory)
   
   //Click on checkbox to inform that this is a subcategory
-  await page.locator('#customCheckMain').click({ force: true });
-  await expect(page.locator('#customCheckMain')).toBeChecked();
+  await page.locator('#customCheckMain').click({ force: true })
+  await expect(page.locator('#customCheckMain')).toBeChecked()
 
   //After checking the checbox, focus moves to the category dropdown to search the chosen option
   await page.keyboard.type(category);
 
   //Wait for dropdown to open and click on the correct option
-  await expect(page.locator('div[role="combobox"]')).toHaveAttribute('aria-expanded', 'true');
-  await page.getByRole('option', { name: category }).click();
+  await expect(page.locator('div[role="combobox"]')).toHaveAttribute('aria-expanded', 'true')
+  await page.getByRole('option', { name: category }).click()
 
   //Only after the dropdown closes we are allowed to click on the submit option
-  await expect(page.locator('div[role="combobox"]')).toHaveAttribute('aria-expanded', 'false');
-  await expect(page.locator('button[type="submit"]')).toBeEnabled();
-  await page.locator('button[type="submit"]').click();
+  await expect(page.locator('div[role="combobox"]')).toHaveAttribute('aria-expanded', 'false')
+  await expect(page.locator('button[type="submit"]')).toBeEnabled()
+  await page.locator('button[type="submit"]').click()
 
   //Verify if category addition alert was displayed
-  await expect(page.getByRole('alertdialog', {name: ' Tipo de categoría adicionada satisfactoriamente '})).toBeVisible(); 
+  await expect(page.getByRole('alertdialog', {name: ' Tipo de categoría adicionada satisfactoriamente '})).toBeVisible()
 
   
   //Goes to last page and verifies if sub category is there
-  const items = page.locator('//app-table-generic//div[3]/nav/ul/li');
-  const count = await items.count();
-  await items.nth(count - 2).click(); 
+  const items = page.locator('//app-table-generic//div[3]/nav/ul/li')
+  const count = await items.count()
+  await items.nth(count - 2).click()
   await expect(page.locator(`tbody`)).toContainText(subCategory)
 })
 
