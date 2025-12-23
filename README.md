@@ -10,7 +10,6 @@ Make sure the following tools are installed before running the project:
 
 - Node.js 18+
 - npm
-- Javscript
 - Git
 
 ---
