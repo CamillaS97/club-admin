@@ -5,9 +5,9 @@ import { generateRandomCategories } from '../util/categoryGeneration';
 const {email, password} =  generateRandomUser();
 const {category, subCategory} = generateRandomCategories();
 
-test('Create user via API', async ({ request }) => {
+test('Create user via API and save response into a costant', async ({ request }) => {
 
-
+  
   const userData = {
     "email": email,
     "password": password,
@@ -20,7 +20,7 @@ test('Create user via API', async ({ request }) => {
   const result = await createUserResponse.json()
 });
 
-test('Verify if login page loaded correctly', async({page}) => {
+test('Verify if login page loaded correctly and login method', async({page}) => {
   await page.goto('https://club-administration.qa.qubika.com/#/auth/login') //access page
   await expect(page.locator('button[type="submit"]')).toBeVisible(); //verify if login button is displayed
   
@@ -36,7 +36,7 @@ test('Verify if login page loaded correctly', async({page}) => {
   await expect(page).toHaveURL(/dashboard/);
 })
 
-test('Verify if Category creation works correctly and if category exists', async({page}) => {
+test('Category creation and verification of its existence', async({page}) => {
   
   await page.goto('https://club-administration.qa.qubika.com/#/auth/login')
 
@@ -70,7 +70,7 @@ test('Verify if Category creation works correctly and if category exists', async
   await expect(page.locator("tbody")).toContainText(category)
 })
 
-test('Verify if SubCategory creation works correctly', async({page}) => {
+test('Sub category creation and verification of its existence', async({page}) => {
   await page.goto('https://club-administration.qa.qubika.com/#/auth/login')
 
   // Fill user and password
@@ -92,15 +92,16 @@ test('Verify if SubCategory creation works correctly', async({page}) => {
   await expect(page.locator('#customCheckMain')).toBeChecked();
 
   await page.keyboard.type(category);
+
   // wait for dropdown to open
   await expect(
     page.locator('div[role="combobox"]')
   ).toHaveAttribute('aria-expanded', 'true');
 
-  // click the desired option by text
+  // click in the option by text
   await page.getByRole('option', { name: category }).click();
 
-  // wait for dropdown to close (selection applied)
+  // wait for dropdown to close
   await expect(
     page.locator('div[role="combobox"]')
   ).toHaveAttribute('aria-expanded', 'false');
